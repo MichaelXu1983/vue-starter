@@ -12,6 +12,7 @@
    - [安装vue命令行工具](#安装vue命令行工具)
 3. [项目环境搭建](#项目环境搭建)
    - [初始化项目](#初始化项目)
+   - [自定义配置](#自定义配置)
    - [新增常用实践目录](#新增常用实践目录)
    - [封装HTTP请求](#封装HTTP请求)
    - [编写公共组件](#编写公共组件)
@@ -122,3 +123,48 @@ vue ui
 <img src="doc/vue-ui-screenshot/9.png" alt="vue-ui-screenshot" width="100" align="bottom" />
 <img src="doc/vue-ui-screenshot/10.png" alt="vue-ui-screenshot" width="100" align="bottom" />
 </center>
+
+#### <a name="自定义配置">自定义配置</a>   
+虽然使用 `vue ui` 可以进行可视化配置，但在实际开发中，如果有需要自定义配置的部分，可以参考[全局CLI配置](https://cli.vuejs.org/zh/config/#%E5%85%A8%E5%B1%80-cli-%E9%85%8D%E7%BD%AE)，本工程配置见 [`vue.config.js`](/vue.config.js)。  
+
+`vue-cli-service` 暴露了 `inspect` 命令用于审查解析好的 `webpack` 配置，该命令会将解析出来的 `webpack` 配置、包括链式访问规则和插件的提示打印到 stdout，方法如下: 
+```bash
+# 参考：https://cli.vuejs.org/guide/webpack.html#inspecting-the-project-s-webpack-config
+vue inspect > output.js 
+
+# 只审查第一条规则
+vue inspect module.rules.0
+
+# 列出所有规则和插件的名字
+vue inspect --rules
+[
+  'vue',
+  'images',
+  'svg',
+  'media',
+  'fonts',
+  'pug',
+  'css',
+  'postcss',
+  'scss',
+  'sass',
+  'less',
+  'stylus',
+  'js',
+  'eslint'
+]
+
+vue inspect --plugins
+[
+  'vue-loader',
+  'define',
+  'case-sensitive-paths',
+  'friendly-errors',
+  'html',
+  'pwa',
+  'preload',
+  'prefetch',
+  'cors',
+  'copy'
+]
+```  
