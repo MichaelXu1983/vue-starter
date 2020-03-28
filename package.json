@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@csstools/normalize.css": "^10.1.0",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "js-cookie": "^2.2.1",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
