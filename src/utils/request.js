@@ -19,72 +19,75 @@ const codeMessage = {
   504: "网关超时。"
 };
 
-// 创建axios实例
+// 创建 axios 实例
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api的base_url
-  timeout: 15000, // 请求超时时间
-  withCredentials: true, // 跨域请求携带凭据
-  headers: { Accept: "application/json", "Content-Type": "application/json" }
+  baseURL: process.env.BASE_API, // api 的 base_url
+  timeout: 5000, // 请求超时时间
+  withCredentials: true // 跨域请求携带凭据
 });
 
-// request 请求拦截器
+// request 请求拦截（可以改变 url 或 options）
 service.interceptors.request.use(
   config => {
-    // Do something before request is sent
-    // if (store.getters && store.getters.token) {
-    //   config.headers = config.headers || {}
-    //   config.headers['X-Token'] = getToken() // 让每个请求携带token--['X-Token']为自定义key，请根据实际情况自行修改
-    // }
+    // 需要在请求之前，执行的方法放这里
     return config;
   },
   error => {
-    // Do something with request error
+    // 此处可以捕获请求出错时，做自定义统一处理
     console.log(error); // for debug
     Promise.reject(error);
   }
 );
 
-// respone 响应拦截器
+// respone 响应拦截
 service.interceptors.response.use(
-  response => response,
   /**
-   * 下面的注释为通过response自定义code来标示请求状态，当code返回如下情况为权限有问题，登出并返回到登录页
-   * 如通过xmlhttprequest 状态码标识 逻辑可写在下面error中
+   * 如果此处不想做任何响应后的处理，就直接返回 response => response
    */
-  //  const res = response.data;
-  //     if (res.code !== 20000) {
-  //       Message({
-  //         message: res.message,
-  //         type: 'error',
-  //         duration: 5 * 1000
-  //       });
-  //       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
-  //       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-  //         MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
-  //           confirmButtonText: '重新登录',
-  //           cancelButtonText: '取消',
-  //           type: 'warning'
-  //         }).then(() => {
-  //           store.dispatch('FedLogOut').then(() => {
-  //             location.reload();// 为了重新实例化vue-router对象 避免bug
-  //           });
-  //         })
-  //       }
-  //       return Promise.reject('error');
-  //     } else {
-  //       return response.data;
-  //     }
+  response => response,
+
+  /**
+   * 此处可以对服务端返回，做自定义统一处理
+   */
+  // response => {
+  //   const res = response.data;
+
+  //   if (res.code === 401.1) {
+  //     console.error(codeMessage[res.code]);
+  //     store.dispatch("user/logout").then(() => {
+  //       setTimeout(() => {
+  //         window.location.reload();
+  //       }, 1500);
+  //     });
+  //     return Promise.reject(new Error(res.message || "Error"));
+  //   } else {
+  //     return res;
+  //   }
+  // },
+
+  /**
+   * 此处可以捕获 HTTP 错误，做自定义统一处理
+   */
   error => {
-    const { status, statusText, headers, data } = error.response;
-    const errortext = codeMessage[status] || statusText;
-    console.log(
-      "response：" + status + "~" + statusText + "~" + headers + "~" + data
-    ); // for debug
-    this.$message({
-      message: errortext,
-      type: "error",
-      duration: 5 * 1000
-    });
+    if (error.response) {
+      const status = error.response.status;
+      if (status === 401) {
+        console.error(codeMessage[status]);
+        window.location.href = "/exception/403";
+      }
+      if (status === 403) {
+        console.error(codeMessage[status]);
+        window.location.href = "/exception/403";
+      }
+      if (status <= 504 && status >= 500) {
+        console.error(codeMessage[status]);
+        window.location.href = "/exception/500";
+      }
+      if (status >= 404 && status < 422) {
+        console.error(codeMessage[status]);
+        window.location.href = "/exception/404";
+      }
+    }
     return Promise.reject(error);
   }
 );
