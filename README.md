@@ -17,6 +17,8 @@
    - [初始化全局样式](#初始化全局样式)
    - [编写异常组件](#编写异常组件)
    - [封装 HTTP 请求](#封装HTTP请求)
+   - [UI 组件库选型](#UI组件库选型)
+   - [安装 Vant UI](#安装VantUI)
    - [编写登录组件](#编写登录组件)
    - [编写权限组件](#编写权限组件)
    - [其他处理](#其他处理)
@@ -483,5 +485,83 @@ service.interceptors.response.use(
   }
 );
 ```
+
+#### <a name="UI组件库选型">UI 组件库选型</a>
+
+**需求**  
+大厂，持续更新，覆盖大部分常用组件，社区活跃，移动端，License 尽量自由
+
+**搜索**  
+[github#awesome-vue#mobile](https://github.com/vuejs/awesome-vue#mobile)
+
+- mint-ui - Mobile UI elements for Vue.js.
+- vant - A Vue.js 2.0 Mobile UI From YouZan.
+- cube-ui - A fantastic mobile ui lib implement by Vue.js 2.
+- mand-mobile - A mobile UI toolkit, based on Vue.js 2, designed for financial scenes.
+- NutUI - A Vue.js 2.0 UI Toolkit for Mobile Web
+
+**对比**  
+| | vant | mand-mobile | mint-ui | NutUI |
+| --- | --- | --- | --- | --- |
+| 厂家 | 有赞 | 滴滴 | 饿了么 | 京东 |
+| 行业 | 电商 | 金融 | 新零售 | 电商 |
+| Commits | 5,020 | 1,401 | 304 | 945 |
+| Branches | 7 | 6 | 3 | 6 |
+| Releases | 303 | 66 | 49 | 31 |
+| Contributors | 113 | 22 | 34 | 16 |
+| LICENSE | MIT | Apache License 2.0 | MIT | MIT |
+
+**结论**  
+最终我选择 “有赞” 出品的 “vant”，理由是覆盖了大部分常用组件，社区最活跃，License 很自由
+
+#### <a name="安装VantUI">安装 Vant UI</a>
+
+1.通过 npm 安装
+
+```shell
+npm i vant -S
+```
+
+2.配置按需引入组件
+**安装插件**
+
+```shell
+npm i babel-plugin-import -D
+```
+
+**自动按需引入组件**  
+编辑 [`/src/babel.config.js`](/src/babel.config.js)
+
+```js
+module.exports = {
+  ...
+  plugins: [
+    ['import', {
+      libraryName: 'vant',
+      libraryDirectory: 'es',
+      style: true
+    }, 'vant']
+  ]
+};
+```
+
+3.开始使用
+
+```vue
+<template>
+  ...
+  <van-button type="info" @tap="bindLogin">登录</van-button>
+  ...
+</template>
+<script>
+import { Button } from "vant";
+export default {
+  components: {
+    [Button.name]: Button
+  }
+};
+</script>
+```
+
 
 ## 未完待续...
