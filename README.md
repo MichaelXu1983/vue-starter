@@ -600,5 +600,55 @@ module.exports = {
 }
 ...
 ```
+5.自定义主题
+**按需引入样式源文件**  
+> 在 babel.config.js 中配置按需引入样式源文件，注意 babel6 不支持按需引入样式，请手动引入样式
+```js
+module.exports = {
+  plugins: [
+    [
+      'import',
+      {
+        libraryName: 'vant',
+        libraryDirectory: 'es',
+        // 指定样式路径
+        style: name => `${name}/style/less`
+      },
+      'vant'
+    ]
+  ]
+};
+```  
 
+**新建主题样式文件**  
+编辑 [`/src/theme.less`](/src/theme.less)
+```shell
+# 直接复制官方主题文件，再根据设计修改
+cp https://github.com/youzan/vant/blob/dev/src/style/var.less /src/theme.less
+```  
+
+**修改样式变量**  
+编辑 [`/vue.config.js`](/vue.config.js)
+```js
+// vue.config.js
+const path = require("path");
+const resolve = dir => path.join(__dirname, dir);
+...
+module.exports = {
+  css: {
+    loaderOptions: {
+      less: {
+        modifyVars: {
+          // 直接覆盖变量
+          'text-color': '#111',
+          'border-color': '#eee',
+          // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+          hack: `true; @import "${resolve("/src/theme.less")}";`
+        },
+      },
+    },
+  },
+};
+...
+```  
 ## 未完待续...

@@ -1,8 +1,9 @@
 const autoprefixer = require("autoprefixer");
 const pxtorem = require("postcss-pxtorem");
-
+const path = require("path");
 const microService = "http://rap2api.taobao.org/app/mock";
 const failService = "http://120.79.26.168:8001";
+const resolve = dir => path.join(__dirname, dir);
 
 module.exports = {
   // publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
@@ -110,13 +111,17 @@ module.exports = {
       scss: {
         prependData: `@import "@/global.scss";`
       },
-      // less: {
-      //   // http://lesscss.org/usage/#less-options-strict-units `Global Variables`
-      //   // `primary` is global variables fields name
-      //   globalVars: {
-      //     primary: "#fff"
-      //   }
-      // }
+      less: {
+        // http://lesscss.org/usage/#less-options-strict-units `Global Variables`
+        // `primary` is global variables fields name
+        globalVars: {
+          primary: "#fff"
+        },
+        modifyVars: {
+          hack: `true; @import "${resolve("/src/theme.less")}";`
+        }
+      },
+
       postcss: {
         // 这里的选项会传递给 postcss-loader
         plugins: [
