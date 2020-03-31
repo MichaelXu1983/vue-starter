@@ -1,3 +1,6 @@
+const autoprefixer = require("autoprefixer");
+const pxtorem = require("postcss-pxtorem");
+
 const microService = "http://rap2api.taobao.org/app/mock";
 const failService = "http://120.79.26.168:8001";
 
@@ -106,7 +109,7 @@ module.exports = {
       // 在这种情况下，我们可以使用 `scss` 选项，对 `scss` 语法进行单独配置
       scss: {
         prependData: `@import "@/global.scss";`
-      }
+      },
       // less: {
       //   // http://lesscss.org/usage/#less-options-strict-units `Global Variables`
       //   // `primary` is global variables fields name
@@ -114,9 +117,16 @@ module.exports = {
       //     primary: "#fff"
       //   }
       // }
-      // postcss: {
-      //   // 这里的选项会传递给 postcss-loader
-      // }
+      postcss: {
+        // 这里的选项会传递给 postcss-loader
+        plugins: [
+          autoprefixer(),
+          pxtorem({
+            rootValue: 18,
+            propList: ["*"]
+          })
+        ]
+      }
     }
   },
 

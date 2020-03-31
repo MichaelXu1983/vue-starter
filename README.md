@@ -245,7 +245,8 @@ npm install -S @csstools/normalize.css  // 安装完成后 `@import '~@csstools/
 ```
 
 ### <a name="编写异常组件">编写异常组件</a>
-1.定义异常类型 [`/src/components/Exception/type.js`](/src/components/Exception/type.js)  
+
+1.定义异常类型 [`/src/components/Exception/type.js`](/src/components/Exception/type.js)
 
 ```js
 const types = {
@@ -272,9 +273,9 @@ const types = {
 };
 
 export default types;
-```  
+```
 
-2.新建异常子组件 [`/src/components/Exception/ExceptionPage.vue`](/src/components/Exception/ExceptionPage.vue)  
+2.新建异常子组件 [`/src/components/Exception/ExceptionPage.vue`](/src/components/Exception/ExceptionPage.vue)
 
 ```vue
 <template>
@@ -318,14 +319,14 @@ export default {
 };
 </script>
 ...
-```  
+```
 
-3.导出异常子组件 [`/src/components/Exception/index.js`](/src/components/Exception/index.js)  
+3.导出异常子组件 [`/src/components/Exception/index.js`](/src/components/Exception/index.js)
 
 ```js
 import ExceptionPage from "./ExceptionPage.vue";
 export default ExceptionPage;
-```  
+```
 
 4.编写异常页面 [`/src/views/exception/403.vue`](/src/views/exception/403.vue) ，其他 404、500 等类似
 
@@ -343,9 +344,9 @@ export default {
   }
 };
 </script>
-```  
+```
 
-5.定义异常页面路由 [`/src/router/index.js`](/src/router/index.js)  
+5.定义异常页面路由 [`/src/router/index.js`](/src/router/index.js)
 
 ```js
 const routes = [
@@ -379,9 +380,10 @@ const routes = [
   }
 ];
 ...
-```  
+```
 
 #### <a name="封装HTTP请求">封装 HTTP 请求</a>
+
 1.安装相关插件
 
 ```bash
@@ -563,5 +565,40 @@ export default {
 </script>
 ```
 
+4.Rem 适配
+**安装插件**
+
+```shell
+npm i postcss-pxtorem -D
+```
+
+**配置插件**  
+> 应避免 IDE ignore node_modules 目录，否则将导致 Vant 样式无法被编译
+编辑 [`/src/vue.config.js`](/src/vue.config.js)
+
+```js
+const autoprefixer = require("autoprefixer");
+const pxtorem = require("postcss-pxtorem");
+...
+module.exports = {
+  ...
+    css: {
+        loaderOptions: {
+            postcss: {
+                    // 这里的选项会传递给 postcss-loader
+                    plugins: [
+                      autoprefixer(),
+                      pxtorem({
+                        rootValue: 18,
+                        propList: ["*"]
+                      })
+                    ]
+                  }
+        }
+    }
+  ...  
+}
+...
+```
 
 ## 未完待续...
