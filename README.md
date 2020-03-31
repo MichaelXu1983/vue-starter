@@ -382,7 +382,7 @@ const routes = [
 ...
 ```
 
-#### <a name="封装HTTP请求">封装 HTTP 请求</a>
+### <a name="封装HTTP请求">封装 HTTP 请求</a>
 
 1.安装相关插件
 
@@ -488,7 +488,7 @@ service.interceptors.response.use(
 );
 ```
 
-#### <a name="UI组件库选型">UI 组件库选型</a>
+### <a name="UI组件库选型">UI 组件库选型</a>  
 
 **需求**  
 大厂，持续更新，覆盖大部分常用组件，社区活跃，移动端，License 尽量自由
@@ -516,20 +516,20 @@ service.interceptors.response.use(
 **结论**  
 最终我选择 “有赞” 出品的 “vant”，理由是覆盖了大部分常用组件，社区最活跃，License 很自由
 
-#### <a name="安装VantUI">安装 Vant UI</a>
+### <a name="安装VantUI">安装 Vant UI</a>  
 
 1.通过 npm 安装
 
 ```shell
 npm i vant -S
-```
+```  
 
-2.配置按需引入组件
+2.配置按需引入组件  
 **安装插件**
 
 ```shell
 npm i babel-plugin-import -D
-```
+```  
 
 **自动按需引入组件**  
 编辑 [`/src/babel.config.js`](/src/babel.config.js)
@@ -545,9 +545,9 @@ module.exports = {
     }, 'vant']
   ]
 };
-```
+```  
 
-3.开始使用
+3.开始使用  
 
 ```vue
 <template>
@@ -563,9 +563,10 @@ export default {
   }
 };
 </script>
-```
+```  
 
-4.Rem 适配
+4.Rem 适配  
+
 **安装插件**
 
 ```shell
@@ -599,8 +600,10 @@ module.exports = {
   ...  
 }
 ...
-```
-5.自定义主题
+```  
+
+5.自定义主题  
+
 **按需引入样式源文件**  
 > 在 babel.config.js 中配置按需引入样式源文件，注意 babel6 不支持按需引入样式，请手动引入样式
 ```js
@@ -651,4 +654,5 @@ module.exports = {
 };
 ...
 ```  
+
 ## 未完待续...
