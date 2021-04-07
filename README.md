@@ -4,6 +4,7 @@
 
 1. [介绍](#介绍)
 2. [开发环境搭建](#开发环境搭建)
+   - [安装Git](#安装Git)
    - [安装 nvm](#安装nvm)
    - [安装 node.js](#安装node.js)
    - [安装 nrm](#安装nrm)
@@ -45,6 +46,9 @@
 本项目是基于 ES2015+ & @vue/cli(v4.2.3) & webpack(v4) & vuex(v3.1.2) & vue-router(v3.1.6) & ESLint(recommended) & Less(v3.11.1) & Jest & Cypress 按照官方文档，遵循目前项目经验的常用实践，搭建的入门脚手架，不定期迭代新功能。大家可以直接克隆使用，也可以按照搭建方法一步一步自己搭建。
 
 ## <a name="开发环境搭建">开发环境搭建</a>
+
+### <a name="安装Git">安装 Git</a>
+下载 [Git](https://git-scm.com/downloads) 客户端并安装，在安装过程中记得勾选安装 `Git Bash` 和 `Git GUI` 两项，并注意要选择 `Use Git from Git Bash only` 选项。  
 
 ### <a name="安装nvm">安装 nvm</a>
 
